@@ -2,6 +2,8 @@
 
 This is a simple desk-clock designed for small displays (5 inch) which supports temperature sensors.
 
+![Screenshot](screenshot.png "Screenshot")
+
 ## Prerequisites
 
 Install the requirements. 
