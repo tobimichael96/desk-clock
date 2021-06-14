@@ -4,6 +4,8 @@ This is a simple desk-clock designed for small displays (5 inch) which supports 
 
 ![Screenshot](screenshot.png "Screenshot")
 
+![Screenshot Temperature](screenshot_temp.png "Screenshot Temperature")
+
 ## Prerequisites
 
 Install the requirements. 
