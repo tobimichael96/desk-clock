@@ -32,21 +32,19 @@ class Window(QWidget):
 
         if args.temp:
             font_temp = QFont('Roboto', 50, QFont.Bold)
-            self.container2 = QHBoxLayout()
+            self.container = QHBoxLayout()
             self.temp_label = QLabel()
             self.temp_label.setFont(font_temp)
-            self.container2.addWidget(self.temp_label, alignment=Qt.AlignCenter)
+            self.container.addWidget(self.temp_label, alignment=Qt.AlignCenter)
             self.humidity_label = QLabel()
             self.humidity_label.setFont(font_temp)
-            self.container2.addWidget(self.humidity_label, alignment=Qt.AlignCenter)
+            self.container.addWidget(self.humidity_label, alignment=Qt.AlignCenter)
             alignment_time = Qt.AlignHCenter | Qt.AlignBottom
         else:
             alignment_time = Qt.AlignHCenter | Qt.AlignTop
-
-        layout.addLayout(self.container)
         layout.addWidget(self.time_label, alignment=alignment_time)
         if args.temp:
-            layout.addLayout(self.container2)
+            layout.addLayout(self.container)
         self.setLayout(layout)
         timer = QTimer(self)
         timer.timeout.connect(self.show_time)
