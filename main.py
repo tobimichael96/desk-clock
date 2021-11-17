@@ -19,20 +19,19 @@ class Window(QWidget):
         self.setFixedSize(800, 480)
 
         font_day = QFont('Roboto', 50, QFont.Bold)
-        font_date = QFont('Roboto', 40, QFont.Bold)
-        font_time = QFont('Roboto', 117, QFont.Bold)
-        self.container = QHBoxLayout()
+        font_date = QFont('Roboto', 45, QFont.Bold)
+        font_time = QFont('Roboto', 120, QFont.Bold)
         self.day_label = QLabel()
         self.day_label.setFont(font_day)
-        self.container.addWidget(self.day_label, alignment=Qt.AlignCenter)
+        layout.addWidget(self.day_label, alignment=Qt.AlignCenter)
         self.date_label = QLabel()
         self.date_label.setFont(font_date)
-        self.container.addWidget(self.date_label, alignment=Qt.AlignCenter)
+        layout.addWidget(self.date_label, alignment=Qt.AlignCenter)
         self.time_label = QLabel()
         self.time_label.setFont(font_time)
 
         if args.temp:
-            font_temp = QFont('Roboto', 45, QFont.Bold)
+            font_temp = QFont('Roboto', 50, QFont.Bold)
             self.container2 = QHBoxLayout()
             self.temp_label = QLabel()
             self.temp_label.setFont(font_temp)
@@ -51,7 +50,7 @@ class Window(QWidget):
         self.setLayout(layout)
         timer = QTimer(self)
         timer.timeout.connect(self.show_time)
-        timer.start(1000)
+        timer.start(5000)
 
         if args.temp:
             timer_slow = QTimer(self)
@@ -62,7 +61,7 @@ class Window(QWidget):
     def show_time(self):
         current_time = QTime.currentTime()
         label_day = datetime.now().strftime("%A")
-        label_time = current_time.toString('hh:mm:ss')
+        label_time = current_time.toString('hh:mm')
         label_date = datetime.now().strftime("%d.%m.%Y")
         self.day_label.setText(label_day)
         self.time_label.setText(label_time)
