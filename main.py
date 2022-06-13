@@ -95,7 +95,7 @@ if args.temp:
     import board
 
     # initial device
-    dhtDevice = adafruit_dht.DHT22(board.D4)
+    dhtDevice = adafruit_dht.DHT22(board.D2)
 
 # create pyqt5 app
 App = QApplication(sys.argv)
