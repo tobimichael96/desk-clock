@@ -3,7 +3,7 @@ import json
 import sys
 from datetime import datetime
 
-import paho.mqtt.client as mqtt
+import paho.mqtt.publish as publish
 from PyQt6.QtCore import QTimer, QTime, Qt
 from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import QApplication, QWidget
@@ -81,12 +81,11 @@ class Window(QWidget):
 
 
 def send_message(temperature, humidity):
-    mqtt_client.reconnect()
     message = {
         "temperature": temperature,
         "humidity": humidity
     }
-    mqtt_client.publish("home/office/clock", json.dumps(message))
+    publish.single(topic="home/office/clock", hostname=mqtt_hostname, auth=mqtt_auth, payload=json.dumps(message))
 
 
 def get_temp():
@@ -104,7 +103,7 @@ def get_temp():
 parser = argparse.ArgumentParser(description='Simple Desk-Clock (TME).')
 parser.add_argument('--temp', dest='temp', action='store_true',
                     help='Activate temperature sensor.')
-parser.add_argument('--mqtt', nargs=1, dest='mqtt', action='store',
+parser.add_argument('--mqtt', nargs='+', dest='mqtt', action='store',
                     help='Activate mqtt output (connection string).')
 args = parser.parse_args()
 
@@ -116,13 +115,11 @@ if args.temp:
     dhtDevice = adafruit_dht.DHT22(board.D2)
 
 if args.mqtt:
-    mqtt_client = mqtt.Client()
-    mqtt_client.connect_async(args.mqtt[0], 1883, 60)
-    # Blocking call that processes network traffic, dispatches callbacks and
-    # handles reconnecting.
-    # Other loop*() functions are available that give a threaded interface and a
-    # manual interface.
-    mqtt_client.loop_start()
+    mqtt_hostname = args.mqtt[0]
+    mqtt_auth = {
+        "username": args.mqtt[1],
+        "password": args.mqtt[2]
+    }
 
 # create pyqt5 app
 App = QApplication(sys.argv)
