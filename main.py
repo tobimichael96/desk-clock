@@ -58,7 +58,7 @@ class Window(QWidget):
 
         if args.temp:
             self.timer_slow = QTimer(self)
-            self.timer_slow.timeout.connect(self.show_date)
+            self.timer_slow.timeout.connect(self.show_temp)
             self.timer_slow.start(5000)
 
     # method called by timer
@@ -71,7 +71,7 @@ class Window(QWidget):
         self.time_label.setText(label_time)
         self.date_label.setText(label_date)
 
-    def show_date(self):
+    def show_temp(self):
         temp, humidity = get_temp()
         send_message(temp, humidity)
         if temp is not None:
@@ -90,7 +90,6 @@ def send_message(temperature, humidity):
 
 def get_temp():
     try:
-        # Print the values to the serial port
         temp = dhtDevice.temperature
         humidity = dhtDevice.humidity
         temp = str(round(temp, 2))
