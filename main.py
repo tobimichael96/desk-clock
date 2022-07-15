@@ -73,7 +73,8 @@ class Window(QWidget):
 
     def show_temp(self):
         temp, humidity = get_temp()
-        send_message(temp, humidity)
+        if args.mqtt:
+            send_message(temp, humidity)
         if temp is not None:
             self.temp_label.setText(temp + "°C")
         if humidity is not None:
