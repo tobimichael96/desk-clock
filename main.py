@@ -3,7 +3,6 @@ import json
 import sys
 from datetime import datetime
 
-import paho.mqtt.publish as publish
 from PyQt6.QtCore import QTimer, QTime, Qt
 from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import QApplication, QWidget
@@ -115,6 +114,7 @@ if args.temp:
     dhtDevice = adafruit_dht.DHT22(board.D2)
 
 if args.mqtt:
+    import paho.mqtt.publish as publish
     mqtt_hostname = args.mqtt[0]
     mqtt_auth = {
         "username": args.mqtt[1],
