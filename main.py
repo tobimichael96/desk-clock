@@ -3,14 +3,13 @@ import json
 import sys
 from datetime import datetime
 
-from PyQt6.QtCore import QTimer, QTime, Qt
-from PyQt6.QtGui import QFont
-from PyQt6.QtWidgets import QApplication, QWidget
-from PyQt6.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel
+from PyQt5.QtCore import QTimer, Qt
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel
 
 
 class Window(QWidget):
-
     def __init__(self):
         super().__init__()
         # creating a vertical layout
@@ -62,9 +61,8 @@ class Window(QWidget):
 
     # method called by timer
     def show_time(self):
-        current_time = QTime.currentTime()
         label_day = datetime.now().strftime("%A")
-        label_time = current_time.toString('hh:mm')
+        label_time = datetime.now().strftime("%H:%M")
         label_date = datetime.now().strftime("%d.%m.%Y")
         self.day_label.setText(label_day)
         self.time_label.setText(label_time)
@@ -115,6 +113,7 @@ if args.temp:
 
 if args.mqtt:
     import paho.mqtt.publish as publish
+
     mqtt_hostname = args.mqtt[0]
     mqtt_auth = {
         "username": args.mqtt[1],
