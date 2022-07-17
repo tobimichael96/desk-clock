@@ -17,16 +17,10 @@ class Window(QWidget):
         # changing the background color to yellow
         self.setStyleSheet("color: #ffd369; background-color: #222831;")
         self.setFixedSize(800, 480)
-
-        font_day = QFont('Roboto', 50)
-        font_day.setBold(True)
         font_date = QFont('Roboto', 45)
         font_date.setBold(True)
-        font_time = QFont('Roboto', 120)
+        font_time = QFont('Roboto', 130)
         font_time.setBold(True)
-        self.day_label = QLabel()
-        self.day_label.setFont(font_day)
-        layout.addWidget(self.day_label, alignment=Qt.AlignmentFlag.AlignCenter)
         self.date_label = QLabel()
         self.date_label.setFont(font_date)
         layout.addWidget(self.date_label, alignment=Qt.AlignmentFlag.AlignCenter)
@@ -47,8 +41,10 @@ class Window(QWidget):
         else:
             alignment_time = Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop
         layout.addWidget(self.time_label, alignment=alignment_time)
+
         if args.temp:
             layout.addLayout(self.container)
+
         self.setLayout(layout)
         self.timer = QTimer()
         self.timer.timeout.connect(self.show_time)
@@ -62,10 +58,8 @@ class Window(QWidget):
     # method called by timer
     def show_time(self):
         current_time = QTime.currentTime()
-        label_day = datetime.now().strftime("%A")
         label_time = current_time.toString('hh:mm')
-        label_date = datetime.now().strftime("%d.%m.%Y")
-        self.day_label.setText(label_day)
+        label_date = datetime.now().strftime("%A, %d.%m.%Y")
         self.time_label.setText(label_time)
         self.date_label.setText(label_date)
 
