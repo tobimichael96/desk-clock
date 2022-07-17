@@ -10,7 +10,6 @@ from PyQt6.QtWidgets import QVBoxLayout, QHBoxLayout, QLabel
 
 
 class Window(QWidget):
-
     def __init__(self):
         super().__init__()
         # creating a vertical layout
