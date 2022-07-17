@@ -52,7 +52,7 @@ class Window(QWidget):
 
         if args.temp:
             self.timer_slow = QTimer(self)
-            self.timer_slow.timeout.connect(self.show_temp)
+            self.timer_slow.timeout.connect(self.show_temperature)
             self.timer_slow.start(5000)
 
     # method called by timer
@@ -63,12 +63,10 @@ class Window(QWidget):
         self.time_label.setText(label_time)
         self.date_label.setText(label_date)
 
-    def show_temp(self):
-        temp, humidity = get_temp()
-        if args.mqtt:
-            send_message(temp, humidity)
-        if temp is not None:
-            self.temp_label.setText(temp + "°C")
+    def show_temperature(self):
+        temperature, humidity = get_temp()
+        if temperature is not None:
+            self.temp_label.setText(temperature + "°C")
         if humidity is not None:
             self.humidity_label.setText(humidity + "%")
 
@@ -83,11 +81,13 @@ def send_message(temperature, humidity):
 
 def get_temp():
     try:
-        temp = dhtDevice.temperature
+        temperature = dhtDevice.temperature
         humidity = dhtDevice.humidity
-        temp = str(round(temp, 2))
+        temperature = str(round(temperature, 2))
         humidity = str(round(humidity, 2))
-        return temp, humidity
+        if args.mqtt:
+            send_message(temperature, humidity)
+        return temperature, humidity
     except RuntimeError:
         return None, None
 
