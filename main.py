@@ -65,7 +65,7 @@ if args.mqtt:
 
 if __name__ == '__main__':
     script_path = os.path.dirname(os.path.realpath(__file__))
-    logging.basicConfig(filename=f'{script_path}/metrics_sender.log',
+    logging.basicConfig(filename=f'{script_path}/desk_clock.log',
                         filemode='a', format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                         datefmt='%H:%M:%S', level=logging.INFO)
     app.run('0.0.0.0', 8080)
