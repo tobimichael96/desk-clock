@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport'
+          content='width = device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1, user-scalable = no, viewport-fit=cover'>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Desk Clock">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/index.css') }}">
+    <title>Desk Clock</title>
+</head>
+
+<body>
+<div id="parent" class="parent">
+    <div class="child"><span id="clocktext" style="font-kerning:none"></span></div>
+    <div class="child"><span id="datetext" style="font-kerning:none"></span></div>
+</div>
+<script type="text/javascript">
+    "use strict";
+
+    const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const clockText = document.getElementById("clocktext");
+    const dateText = document.getElementById("datetext");
+
+    function getMetrics() {
+        fetch(window.location.href + "api/getMetrics")
+            .then(response => response.json())
+            .then(data => updateMetrics(data))
+            .catch(function () {
+                console.log("No data received.")
+            });
+    }
+
+    function updateMetrics(metrics) {
+        console.log(metrics);
+        if (metrics !== "None") {
+            if (document.getElementById("temperature") === null) {
+                const node = document.createElement("div");
+                node.className = "child";
+                node.innerHTML = '<span id="temperature" style="font-kerning:none"></span><span id="humidity" style="font-kerning:none"></span>'
+                const parent = document.getElementById("parent");
+                parent.appendChild(node);
+                updateTextSize();
+            }
+            const temperatureText = document.getElementById("temperature");
+            temperatureText.textContent = metrics['temperature'] + "°C";
+            const humidityText = document.getElementById("humidity");
+            humidityText.textContent = metrics['humidity'] + "%";
+        }
+    }
+
+    function updateClock() {
+        const d = new Date();
+        let time = "";
+        time += (10 > d.getHours() ? "0" : "") + d.getHours() + ":";
+        time += (10 > d.getMinutes() ? "0" : "") + d.getMinutes();
+        let date = weekday[d.getDay()] + ", ";
+        date += (10 > d.getDay() ? "0" : "") + d.getDay() + ".";
+        date += (10 > d.getMonth() ? "0" : "") + d.getMonth() + ".";
+        clockText.textContent = time;
+        dateText.textContent = date;
+        setTimeout(updateClock, 1000 - d.getTime() % 1000 + 20);
+    }
+
+    function updateTextSize() {
+        let children = document.getElementsByClassName('child');
+        for (let child of children) {
+            let textSize = (document.documentElement.clientHeight / children.length) / 9
+            if (document.documentElement.clientHeight > document.documentElement.clientWidth) {
+                textSize = textSize / 2;
+            }
+            child.style.fontSize = textSize + "vh";
+        }
+    }
+
+    updateClock();
+    updateTextSize();
+    setInterval(getMetrics, 15000);
+    window.addEventListener("resize", updateTextSize);
+</script>
+</body>
+</html>
