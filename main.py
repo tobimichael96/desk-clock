@@ -36,7 +36,8 @@ def get_temp():
         if args.mqtt:
             send_message(message)
         return message
-    except RuntimeError:
+    except RuntimeError as e:
+        logging.error(f'Could not get data from sensor with error: {e}')
         return json.dumps({"Error": "No data"}), 204
 
 
