@@ -23,15 +23,17 @@ html {
     grid-auto-flow: row;
     grid-column-gap: 0;
     grid-row-gap: 0;
-    height: 95vh;
-    width: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
 .child {
     text-align: center;
     height: auto;
     width: 100%;
-    font-size: 5vw;
     white-space: nowrap;
 }
 
