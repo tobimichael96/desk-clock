@@ -77,9 +77,9 @@
         for (let child of children) {
             let textSize = (document.documentElement.clientWidth / (displayRatio * 2 * children.length));
             if (child.children[0].id === "clocktext") {
-                textSize += textSize / 1.5;
+                textSize += textSize;
             } else {
-                textSize -= textSize / 8;
+                textSize -= textSize / 9;
             }
             child.style.fontSize = textSize + "pt";
         }
