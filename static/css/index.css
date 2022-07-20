@@ -23,7 +23,8 @@ html {
     grid-auto-flow: row;
     grid-column-gap: 0;
     grid-row-gap: 0;
-    height: 100vh;
+    height: 95vh;
+    width: auto;
 }
 
 .child {
