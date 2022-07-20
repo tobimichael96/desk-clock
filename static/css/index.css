@@ -35,6 +35,12 @@ html {
     height: auto;
     width: 100%;
     white-space: nowrap;
+    display: grid;
+}
+
+span {
+    justify-self: center;
+    align-self: center
 }
 
 span + span {
