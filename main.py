@@ -24,21 +24,25 @@ def send_message(message):
 
 
 def get_temp():
-    try:
-        temperature = dhtDevice.temperature
-        humidity = dhtDevice.humidity
-        temperature = str(round(temperature, 2))
-        humidity = str(round(humidity, 2))
-        message = json.dumps({
-            "temperature": temperature,
-            "humidity": humidity
-        })
-        if args.mqtt:
-            send_message(message)
-        return message
-    except RuntimeError as e:
-        logging.error(f'Could not get data from sensor with error: {e}')
-        return json.dumps({"Error": "No data"}), 204
+    return json.dumps({
+        "temperature": 22,
+        "humidity": 45
+    })
+    # try:
+    #     temperature = dhtDevice.temperature
+    #     humidity = dhtDevice.humidity
+    #     temperature = str(round(temperature, 2))
+    #     humidity = str(round(humidity, 2))
+    #     message = json.dumps({
+    #         "temperature": temperature,
+    #         "humidity": humidity
+    #     })
+    #     if args.mqtt:
+    #         send_message(message)
+    #     return message
+    # except RuntimeError as e:
+    #     logging.error(f'Could not get data from sensor with error: {e}')
+    #     return json.dumps({"Error": "No data"}), 204
 
 
 parser = argparse.ArgumentParser(description='Simple Desk-Clock (TME).')

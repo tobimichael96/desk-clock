@@ -40,7 +40,7 @@ html {
 
 span {
     justify-self: center;
-    align-self: center
+    align-self: center;
 }
 
 span + span {

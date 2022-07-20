@@ -35,12 +35,11 @@
     }
 
     function updateMetrics(metrics) {
-        console.log(metrics);
         if (metrics !== "None") {
             if (document.getElementById("temperature") === null) {
                 const node = document.createElement("div");
                 node.className = "child";
-                node.innerHTML = '<span id="temperature" style="font-kerning:none"></span><span id="humidity" style="font-kerning:none"></span>'
+                node.innerHTML = '<div style="justify-self: center; align-self: center;"><span id="temperature" style="font-kerning:none"></span><span id="humidity" style="font-kerning:none"></span></div>'
                 const parent = document.getElementById("parent");
                 parent.appendChild(node);
                 updateTextSize();
@@ -66,13 +65,21 @@
     }
 
     function updateTextSize() {
+        const clientHeight = document.documentElement.clientHeight;
+        const clientWidth = document.documentElement.clientWidth;
+        let displayRatio;
+        if (clientHeight > clientWidth) {
+            displayRatio = clientHeight / clientWidth;
+        } else {
+            displayRatio = clientWidth / clientHeight;
+        }
         let children = document.getElementsByClassName('child');
         for (let child of children) {
-            let textSize = (document.documentElement.clientWidth / (3 * children.length));
+            let textSize = (document.documentElement.clientWidth / (displayRatio * 2 * children.length));
             if (child.children[0].id === "clocktext") {
-                textSize += textSize / 5;
+                textSize += textSize / 3;
             } else {
-                textSize -= textSize / 5;
+                textSize -= textSize / 7;
             }
             child.style.fontSize = textSize + "pt";
         }
